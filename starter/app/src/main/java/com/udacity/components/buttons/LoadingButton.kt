@@ -1,4 +1,4 @@
-package com.udacity
+package com.udacity.components.buttons
 
 import android.animation.ValueAnimator
 import android.content.Context
