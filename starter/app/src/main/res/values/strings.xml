@@ -12,4 +12,10 @@
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
+
+    <!-- Test Label -->
+    <string name="radio_button_label_glide">Glide</string>
+    <string name="radio_button_label_retrofit">Retrofit</string>
+    <string name="radio_button_label_loadapp">Load App</string>
+
 </resources>
