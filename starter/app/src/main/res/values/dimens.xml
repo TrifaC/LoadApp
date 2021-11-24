@@ -1,11 +1,17 @@
 <resources>
 
     <!-- Spacing -->
+    <dimen name="custom_btn_margin">16dp</dimen>
+    <dimen name="custom_btn_padding">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="radio_btn_padding">16dp</dimen>
 
     <!-- Text Size -->
     <dimen name="default_text_size">20sp</dimen>
+    <dimen name="default_custom_button_text_size">24sp</dimen>
 
     <!-- Width and Height -->
     <dimen name="default_action_bar_height">48dp</dimen>
+    <dimen name="default_custom_button_height">48dp</dimen>
+    <dimen name="default_custom_button_circle_diameter">32dp</dimen>
 </resources>

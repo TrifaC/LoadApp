@@ -1,11 +1,12 @@
 package com.udacity.components.buttons
 
+import com.udacity.R
+
 /**
- * The sealed class contains three different states of the button.
- *
+ * Change the sealed class to enum class.
  * */
-sealed class ButtonState {
-    object Clicked : ButtonState()
-    object Loading : ButtonState()
-    object Completed : ButtonState()
+enum class ButtonState(val label: Int) {
+    TO_CLICK(R.string.custom_button_label_to_click),
+    LOADING(R.string.custom_button_label_loading),
+    COMPLETE(R.string.custom_button_label_complete);
 }

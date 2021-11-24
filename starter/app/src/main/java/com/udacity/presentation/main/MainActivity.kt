@@ -1,6 +1,5 @@
 package com.udacity.presentation.main
 
-import android.app.AppComponentFactory
 import android.app.DownloadManager
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -21,8 +20,6 @@ import com.udacity.databinding.ActivityMainBinding
 import com.udacity.util.Constants
 import com.udacity.util.DownloadUtil
 
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.content_main.view.*
 
 
@@ -68,13 +65,13 @@ class MainActivity : AppCompatActivity() {
      * TODO: Make it more clear.
      * */
     private fun initClickListener() {
-        binding.mainActivityContents.custom_button.setOnClickListener {
-            downloadID = DownloadUtil.download(downloadManager,
-                Constants.DOWNLOAD_URL_PROJECT_STARTER,
-                getString(R.string.app_name),
-                getString(R.string.app_description)
-            )
-        }
+//        binding.mainActivityContents.custom_button.setOnClickListener {
+//            downloadID = DownloadUtil.download(downloadManager,
+//                Constants.DOWNLOAD_URL_PROJECT_STARTER,
+//                getString(R.string.app_name),
+//                getString(R.string.app_description)
+//            )
+//        }
     }
 
     /**
