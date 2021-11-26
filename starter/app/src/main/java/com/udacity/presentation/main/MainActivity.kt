@@ -13,6 +13,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import com.udacity.R
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         initBindingAndVM()
         initManager()
         initClickListener()
+        initVMConnection()
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
@@ -55,23 +57,24 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
         mainViewModelFactory = MainActivityVMFactory(application)
-        mainViewModel = ViewModelProvider(this, mainViewModelFactory).get(MainActivityVM::class.java)
+        mainViewModel =
+            ViewModelProvider(this, mainViewModelFactory).get(MainActivityVM::class.java)
         binding.lifecycleOwner = this
 
     }
 
     /**
      * Set onClickListener for clickable item.
-     * TODO: Make it more clear.
      * */
     private fun initClickListener() {
-//        binding.mainActivityContents.custom_button.setOnClickListener {
-//            downloadID = DownloadUtil.download(downloadManager,
-//                Constants.DOWNLOAD_URL_PROJECT_STARTER,
-//                getString(R.string.app_name),
-//                getString(R.string.app_description)
-//            )
-//        }
+        binding.mainActivityContents.loading_btn.setOnClickListener {
+            downloadID = mainViewModel.changeDownloadState(
+                downloadManager,
+                Constants.DOWNLOAD_URL_PROJECT_STARTER,
+                getString(R.string.file_name_loadapp),
+                getString(R.string.file_description_loadapp)
+            ) ?: 0
+        }
     }
 
     /**
@@ -79,6 +82,13 @@ class MainActivity : AppCompatActivity() {
      * */
     private fun initManager() {
         downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+    }
+
+    /**
+     * Initialization the connection between UI components and view model.
+     * */
+    private fun initVMConnection() {
+        mainViewModel.loadingBtnState.observe( this, Observer { binding.mainActivityContents.loading_btn.changeState(it) } )
     }
 
 
