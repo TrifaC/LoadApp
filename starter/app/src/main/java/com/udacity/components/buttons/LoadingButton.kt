@@ -16,8 +16,7 @@ class LoadingButton @JvmOverloads constructor(
         private const val LOG_TAG = "Loading Button"
     }
 
-    private lateinit var extraCanvas: Canvas
-    private lateinit var extraBitmap: Bitmap
+
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
@@ -30,27 +29,59 @@ class LoadingButton @JvmOverloads constructor(
     private val valueAnimator = ValueAnimator()
 
     /** The button state with observable attribute */
-    private var buttonState: ButtonState by Delegates.observable(ButtonState.TO_CLICK) { p, old, new ->
+    private var buttonState: ButtonState by Delegates.observable(ButtonState.TO_CLICK) { property, oldValue, newValue ->
         /** The function to be executed when state changing. */
+        Log.d(LOG_TAG, "The property is ${property.name}")
+        Log.d(LOG_TAG, "The old value is $oldValue")
+        Log.d(LOG_TAG, "The new value is $newValue")
+    }
+
+
+//------------------------------------- Initialization ---------------------------------------------
+
+
+    init {
+        isClickable = true
     }
 
 
 //------------------------------------- Override Functions -----------------------------------------
 
+    /**
+     * The method is used to execute the click function and UI renew.
+     * For the super.performClick(), will run the onClickListener function on the Main Activity. Therefore,
+     * we should not run the return function directly. After that the invalidate() function will call the
+     * onDraw function compulsory to draw new style.
+     *
+     * @return true for running successfully.
+     * @see invalidate
+     * @see onDraw
+     * */
+    override fun performClick(): Boolean {
+        super.performClick()
+        invalidate()
+        return true
+    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         Log.d(LOG_TAG, "onSizeChanged: run.")
         super.onSizeChanged(w, h, oldw, oldh)
-        //Create a bitmap above Canvas, draw the on the canvas.
-        extraBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        extraCanvas = Canvas(extraBitmap)
-        extraCanvas.drawColor(Color.BLUE)
     }
 
+    /**
+     * The method to update the UI of the button.
+     * */
     override fun onDraw(canvas: Canvas?) {
         Log.d(LOG_TAG, "onDraw: run.")
         super.onDraw(canvas)
-        canvas?.drawBitmap(extraBitmap, 0f, 0f, null)
+
+        paint.color = when (buttonState) {
+            ButtonState.TO_CLICK -> Color.BLUE
+            ButtonState.LOADING -> Color.GREEN
+            else -> Color.RED
+        }
+
+        canvas?.drawRect(0f,0f, width.toFloat(),height.toFloat(),paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -74,9 +105,14 @@ class LoadingButton @JvmOverloads constructor(
 //------------------------------------- Button State Change Function -------------------------------
 
 
+    /**
+     * The function will be called to change the state of button.
+     *
+     * @param mButtonState is the state of button which passed from view model.
+     * */
     fun changeState(mButtonState: ButtonState) {
         buttonState = mButtonState
-        Log.d(LOG_TAG, "The button state is $buttonState")
+        // Log.d(LOG_TAG, "The button state is $buttonState")
     }
 
 

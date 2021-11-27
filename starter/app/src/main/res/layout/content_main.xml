@@ -27,22 +27,19 @@
             android:id="@+id/glide_download_RB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/radio_button"
-            android:text="@string/radio_button_label_glide" />
+            style="@style/radio_button" />
 
         <RadioButton
             android:id="@+id/load_app_download_RB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/radio_button"
-            android:text="@string/radio_button_label_loadapp" />
+            style="@style/radio_button" />
 
         <RadioButton
             android:id="@+id/retrofit_download_RB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/radio_button"
-            android:text="@string/radio_button_label_retrofit" />
+            style="@style/radio_button" />
     </RadioGroup>
 
     <com.udacity.components.buttons.LoadingButton
@@ -56,18 +53,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
-
-<!--    <Button-->
-<!--        android:id="@+id/loading_btn"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/default_custom_button_height"-->
-<!--        android:text = "Download"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginBottom="24dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
