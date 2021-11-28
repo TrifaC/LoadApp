@@ -58,10 +58,8 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     }
 
     fun finishDownload() {
-        _loadingBtnState.value = ButtonState.COMPLETE
-    }
-
-    fun resetDownload() {
         _loadingBtnState.value = ButtonState.TO_CLICK
     }
+
+
 }

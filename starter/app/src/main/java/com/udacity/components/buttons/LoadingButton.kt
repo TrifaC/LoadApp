@@ -6,6 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import com.udacity.util.CustomButtonPaint
 import kotlin.properties.Delegates
 
 class LoadingButton @JvmOverloads constructor(
@@ -16,24 +17,22 @@ class LoadingButton @JvmOverloads constructor(
         private const val LOG_TAG = "Loading Button"
     }
 
-
-    private var paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
-        textAlign = Paint.Align.CENTER
-        textSize = 55.0f
-        typeface = Typeface.DEFAULT_BOLD
-        strokeWidth = 3f
-    }
+    private var paint = CustomButtonPaint.defaultPaint
+    private var background = Color.BLUE
+    private var textColor = Color.WHITE
 
     /** The animator is used for appearance changing. */
     private val valueAnimator = ValueAnimator()
 
-    /** The button state with observable attribute */
+    /**
+     * The button state with observable attribute, the invalidate will execute and call the onDraw function.
+     * */
     private var buttonState: ButtonState by Delegates.observable(ButtonState.TO_CLICK) { property, oldValue, newValue ->
-        /** The function to be executed when state changing. */
-        Log.d(LOG_TAG, "The property is ${property.name}")
-        Log.d(LOG_TAG, "The old value is $oldValue")
-        Log.d(LOG_TAG, "The new value is $newValue")
+        background = when (newValue) {
+            ButtonState.TO_CLICK -> Color.BLUE
+            ButtonState.LOADING -> Color.GREEN
+        }
+        invalidate()
     }
 
 
@@ -51,7 +50,6 @@ class LoadingButton @JvmOverloads constructor(
      * Add the method to rewrite the process when the button has been clicked.
      *
      * @return true for running successfully.
-     * @see onDraw
      * */
     override fun performClick(): Boolean {
         super.performClick()
@@ -70,13 +68,10 @@ class LoadingButton @JvmOverloads constructor(
         Log.d(LOG_TAG, "onDraw: run.")
         super.onDraw(canvas)
 
-        paint.color = when (buttonState) {
-            ButtonState.TO_CLICK -> Color.BLUE
-            ButtonState.LOADING -> Color.GREEN
-            else -> Color.RED
-        }
-
+        paint.color = background
         canvas?.drawRect(0f,0f, width.toFloat(),height.toFloat(),paint)
+        paint.color = textColor
+        canvas?.drawText(buttonState.name, (width.toFloat()/2), (height.toFloat()/2), paint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -91,14 +86,14 @@ class LoadingButton @JvmOverloads constructor(
 
 
     /**
-     * The function will be called to change the state of button, also do the onDraw() function.
+     * The function will be called to change the state of button.
      *
      * @param mButtonState is the state of button which passed from view model.
-     * @see invalidate
      * */
     fun changeState(mButtonState: ButtonState) {
         buttonState = mButtonState
-        invalidate()
         // Log.d(LOG_TAG, "The button state is $buttonState")
     }
+
+
 }
