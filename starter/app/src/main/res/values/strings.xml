@@ -25,4 +25,7 @@
     <string name="file_description_retrofit">Type-safe HTTP client for Android and Java by Square.Inc</string>
     <string name="file_description_loadapp">Current repository by Udacity</string>
 
+    <!-- Error -->
+    <string name="no_radio_button_selection">No Radio Button Selection</string>
+
 </resources>

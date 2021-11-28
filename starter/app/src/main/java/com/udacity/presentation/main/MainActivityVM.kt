@@ -2,13 +2,10 @@ package com.udacity.presentation.main
 
 import android.app.Application
 import android.app.DownloadManager
-import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.udacity.R
 import com.udacity.components.buttons.ButtonState
-import com.udacity.util.Constants
 import com.udacity.util.DownloadUtil
 
 class MainActivityVM(application: Application) : AndroidViewModel(application) {
@@ -20,6 +17,7 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     private val _loadingBtnState = MutableLiveData<ButtonState>()
     val loadingBtnState: LiveData<ButtonState>
         get() = _loadingBtnState
+
 
 //------------------------------------- Initialization ---------------------------------------------
 
@@ -40,27 +38,30 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
      * @param appDescription is the description of the app will be shown in the notification.
      * @return The id number of download process in this time.
      * */
-    fun changeDownloadState(
+    fun startDownload(
         downloadManager: DownloadManager,
         appUrl: String,
         appName: String,
         appDescription: String
     ): Long? {
-        _loadingBtnState.value = when (_loadingBtnState.value) {
-            ButtonState.TO_CLICK -> ButtonState.LOADING
-            ButtonState.LOADING -> ButtonState.COMPLETE
-            else -> ButtonState.TO_CLICK
-        }
-        return if (_loadingBtnState.value == ButtonState.LOADING) {
-            DownloadUtil.download(
+        if (_loadingBtnState.value == ButtonState.TO_CLICK) {
+            _loadingBtnState.value = ButtonState.LOADING
+            return DownloadUtil.download(
                 downloadManager,
                 appUrl,
                 appName,
                 appDescription
             )
         } else {
-            null
+            return null
         }
+    }
 
+    fun finishDownload() {
+        _loadingBtnState.value = ButtonState.COMPLETE
+    }
+
+    fun resetDownload() {
+        _loadingBtnState.value = ButtonState.TO_CLICK
     }
 }

@@ -48,18 +48,13 @@ class LoadingButton @JvmOverloads constructor(
 //------------------------------------- Override Functions -----------------------------------------
 
     /**
-     * The method is used to execute the click function and UI renew.
-     * For the super.performClick(), will run the onClickListener function on the Main Activity. Therefore,
-     * we should not run the return function directly. After that the invalidate() function will call the
-     * onDraw function compulsory to draw new style.
+     * Add the method to rewrite the process when the button has been clicked.
      *
      * @return true for running successfully.
-     * @see invalidate
      * @see onDraw
      * */
     override fun performClick(): Boolean {
         super.performClick()
-        invalidate()
         return true
     }
 
@@ -89,16 +84,6 @@ class LoadingButton @JvmOverloads constructor(
         Log.d(LOG_TAG, "The width is ${MeasureSpec.getSize(widthMeasureSpec)}")
         Log.d(LOG_TAG, "The height is ${MeasureSpec.getSize(heightMeasureSpec)}")
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-//        val minw: Int = paddingLeft + paddingRight + suggestedMinimumWidth
-//        val w: Int = resolveSizeAndState(minw, widthMeasureSpec, 1)
-//        val h: Int = resolveSizeAndState(
-//            MeasureSpec.getSize(w),
-//            heightMeasureSpec,
-//            0
-//        )
-//        widthSize = w
-//        heightSize = h
-//        setMeasuredDimension(w, h)
     }
 
 
@@ -106,14 +91,14 @@ class LoadingButton @JvmOverloads constructor(
 
 
     /**
-     * The function will be called to change the state of button.
+     * The function will be called to change the state of button, also do the onDraw() function.
      *
      * @param mButtonState is the state of button which passed from view model.
+     * @see invalidate
      * */
     fun changeState(mButtonState: ButtonState) {
         buttonState = mButtonState
+        invalidate()
         // Log.d(LOG_TAG, "The button state is $buttonState")
     }
-
-
 }
