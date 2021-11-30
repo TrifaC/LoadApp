@@ -2,7 +2,6 @@ package com.udacity.util
 
 import android.app.DownloadManager
 import android.net.Uri
-import com.udacity.R
 
 object DownloadUtil {
 

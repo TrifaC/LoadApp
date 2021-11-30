@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.udacity.util.CustomButtonPaint
-import kotlin.properties.Delegates
+import com.udacity.util.calculateBaseline
 
 class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -17,23 +17,29 @@ class LoadingButton @JvmOverloads constructor(
         private const val LOG_TAG = "Loading Button"
     }
 
-    private var paint = CustomButtonPaint.defaultPaint
-    private var background = Color.BLUE
-    private var textColor = Color.WHITE
+    /** Button Drawing Rectangle, Button Cover Drawing Rectangle, Circle Drawing Rectangle. */
+    private var rectButtonF = RectF()
+    private var rectButtonCoverF = RectF()
+    private var rectArcF = RectF()
+
+    /** Text Paint, Background Paint, Act Paint. */
+    private var textP = CustomButtonPaint.defaultTextPaint
+    private var backgroundP = CustomButtonPaint.buttonBackgroundPaint
+    private var backgroundCoverP = CustomButtonPaint.buttonBackgroundCoverPaint
+    private var arcP = CustomButtonPaint.defaultArcPaint
+
+    /** The coordinate of button and text. */
+    private var buttonCenterX: Float = 0f
+    private var buttonCenterY: Float = 0f
+    private var buttonTextBaseline: Float = 0f
 
     /** The animator is used for appearance changing. */
-    private val valueAnimator = ValueAnimator()
+    private var valueAnimator = ValueAnimator()
+    private var sweepDegree: Float = 0f
+    private var processPercent: Float = 0f
 
-    /**
-     * The button state with observable attribute, the invalidate will execute and call the onDraw function.
-     * */
-    private var buttonState: ButtonState by Delegates.observable(ButtonState.TO_CLICK) { property, oldValue, newValue ->
-        background = when (newValue) {
-            ButtonState.TO_CLICK -> Color.BLUE
-            ButtonState.LOADING -> Color.GREEN
-        }
-        invalidate()
-    }
+    /** The state of the button */
+    private var buttonState: ButtonState = ButtonState.TO_CLICK
 
 
 //------------------------------------- Initialization ---------------------------------------------
@@ -41,6 +47,18 @@ class LoadingButton @JvmOverloads constructor(
 
     init {
         isClickable = true
+        valueAnimatorInit()
+    }
+
+    private fun valueAnimatorInit() {
+        valueAnimator = ValueAnimator.ofFloat(0f, 360f)
+        valueAnimator.duration = 2900
+        valueAnimator.addUpdateListener { animation ->
+            sweepDegree = animation.animatedValue as Float
+            processPercent = (sweepDegree/360f)
+            rectButtonCoverF.right = width*processPercent
+            invalidate()
+        }
     }
 
 
@@ -56,9 +74,24 @@ class LoadingButton @JvmOverloads constructor(
         return true
     }
 
+    /**
+     * The method is used to calculate the coordination of different component when size changing.
+     *
+     * @param w is the width of component
+     * @param h is the height of component
+     * @param oldh is the old version height of component
+     * @param oldw is the old version width of component
+     * */
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         Log.d(LOG_TAG, "onSizeChanged: run.")
         super.onSizeChanged(w, h, oldw, oldh)
+
+        rectButtonF = RectF(0f, 0f, w.toFloat(), h.toFloat())
+        rectButtonCoverF = RectF(0f, 0f,(processPercent*w), h.toFloat())
+        rectArcF = RectF((w - h).toFloat(), 0f, w.toFloat(), h.toFloat())
+        buttonCenterX = rectButtonF.centerX()
+        buttonCenterY = rectButtonF.centerY()
+        buttonTextBaseline = calculateBaseline(rectButtonF, textP.fontMetrics)
     }
 
     /**
@@ -68,16 +101,13 @@ class LoadingButton @JvmOverloads constructor(
         Log.d(LOG_TAG, "onDraw: run.")
         super.onDraw(canvas)
 
-        paint.color = background
-        canvas?.drawRect(0f,0f, width.toFloat(),height.toFloat(),paint)
-        paint.color = textColor
-        canvas?.drawText(buttonState.name, (width.toFloat()/2), (height.toFloat()/2), paint)
+        canvas?.drawRect(rectButtonF, backgroundP)
+        canvas?.drawRect(rectButtonCoverF, backgroundCoverP)
+        canvas?.drawText(buttonState.name, buttonCenterX, buttonTextBaseline, textP)
+        canvas?.drawArc(rectArcF, 0f, sweepDegree, true, arcP)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        Log.d(LOG_TAG, "onMeasure: run.")
-        Log.d(LOG_TAG, "The width is ${MeasureSpec.getSize(widthMeasureSpec)}")
-        Log.d(LOG_TAG, "The height is ${MeasureSpec.getSize(heightMeasureSpec)}")
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
@@ -92,7 +122,17 @@ class LoadingButton @JvmOverloads constructor(
      * */
     fun changeState(mButtonState: ButtonState) {
         buttonState = mButtonState
-        // Log.d(LOG_TAG, "The button state is $buttonState")
+        when (mButtonState) {
+            ButtonState.TO_CLICK -> {
+                rectButtonCoverF?.right = 0f
+            }
+            ButtonState.LOADING -> {
+                valueAnimator.start()
+            }
+        }
+        processPercent = 0f
+        sweepDegree = 0f
+        invalidate()
     }
 
 

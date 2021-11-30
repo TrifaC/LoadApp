@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.udacity.R
+import com.udacity.components.buttons.ButtonState
 import com.udacity.data.DefaultDownloadList
 import com.udacity.data.DownloadItem
 import com.udacity.databinding.ActivityMainBinding
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
      * The timer is used to simulate the period of download.
      * */
     private fun initTimer() {
-        downloadTimer = object: CountDownTimer(3000,100) {
+        downloadTimer = object: CountDownTimer(3000,1000) {
             override fun onTick(millisUntilFinished: Long) {
                 Log.d(LOG_TAG, "onTick: run().")
             }
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity() {
      * Initialization the connection between UI components and view model.
      * */
     private fun initVMConnection() {
-        mainViewModel.loadingBtnState.observe( this, Observer { binding.mainActivityContents.loading_btn.changeState(it) } )
+        mainViewModel.loadingBtnState.observe( this, Observer { stateChangeOperation(it) } )
     }
 
 
@@ -134,6 +135,18 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
         }
+    }
+
+
+//------------------------------------- Event Trigger And UI Update --------------------------------
+
+    /**
+     * The method handle the operation when the state is update.
+     *
+     * TODO: Consider the click action when the state is loading.
+     * */
+    private fun stateChangeOperation(state: ButtonState) {
+        binding.mainActivityContents.loading_btn.changeState(state)
     }
 
 
