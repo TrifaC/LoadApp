@@ -16,9 +16,16 @@ fun calculateBaseline(rectF: RectF, fontMetrics: Paint.FontMetrics): Float {
 }
 
 /**
- *
+ * Function to calculate the radius of arc.
  * */
 fun calculateRadius(height: Float): Float {
     return (height * 0.8f)/2
+}
+
+/**
+ * Function to calculate the Rectangle to draw the arc.
+ * */
+fun calculateArcRectangle() {
+
 }
 
