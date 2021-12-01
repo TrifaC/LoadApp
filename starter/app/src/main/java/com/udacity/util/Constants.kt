@@ -7,4 +7,8 @@ object Constants {
 
     const val CHANNEL_ID = "channelID"
 
+    const val NOTIFICATION_ID = 7
+    const val REQUEST_CODE = 8
+    const val FLAGS = 9
+
 }

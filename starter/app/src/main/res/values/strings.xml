@@ -14,6 +14,11 @@
     <string name="custom_button_label_complete">Complete</string>
     <string name="title_activity_detail">DetailActivity</string>
 
+    <!-- Notification Channel label -->
+    <string name="loading_app_channel_id">Loading App Channel</string>
+    <string name="loading_app_channel_name">Loading Channel</string>
+    <string name="loading_app_notification_title">Finish Download</string>
+
     <!-- Test Label -->
     <string name="radio_button_label_glide">Glide</string>
     <string name="radio_button_label_retrofit">Retrofit</string>

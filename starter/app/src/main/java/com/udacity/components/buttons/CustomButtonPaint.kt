@@ -1,4 +1,4 @@
-package com.udacity.util
+package com.udacity.components.buttons
 
 import android.content.Context
 import android.graphics.Paint

@@ -6,7 +6,6 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import com.udacity.util.CustomButtonPaint
 import com.udacity.util.calculateArcRectangle
 import com.udacity.util.calculateBaseline
 
