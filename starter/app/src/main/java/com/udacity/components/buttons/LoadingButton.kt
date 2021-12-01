@@ -44,12 +44,21 @@ class LoadingButton @JvmOverloads constructor(
 
 //------------------------------------- Initialization ---------------------------------------------
 
-
+    /**
+     * Initialization; Make button clickable, init the animator.
+     * */
     init {
         isClickable = true
         valueAnimatorInit()
     }
 
+    /**
+     * The method is used to initialize the animator; Range Setting, Duration Setting, Update the sweep
+     * degree of the circular bar, update the progress bar percent. Use invalidate to trigger the onDraw()
+     * function.
+     *
+     * @see invalidate
+     * */
     private fun valueAnimatorInit() {
         valueAnimator = ValueAnimator.ofFloat(0f, 360f)
         valueAnimator.duration = 2900
@@ -86,11 +95,18 @@ class LoadingButton @JvmOverloads constructor(
         Log.d(LOG_TAG, "onSizeChanged: run.")
         super.onSizeChanged(w, h, oldw, oldh)
 
+        // The Rectangle area to draw the button.
         rectButtonF = RectF(0f, 0f, w.toFloat(), h.toFloat())
-        rectButtonCoverF = RectF(0f, 0f,(processPercent*w), h.toFloat())
+        // The Rectangle area to draw the button. (During the loading progress)
+        rectButtonCoverF = RectF(0f, 0f,0f, h.toFloat())
+        // The Rectangle area to draw the circular bar arc.
         rectArcF = RectF((w - h).toFloat(), 0f, w.toFloat(), h.toFloat())
+
+        // The center of button (X Coordination)
         buttonCenterX = rectButtonF.centerX()
+        // The center of button (Y Coordination)
         buttonCenterY = rectButtonF.centerY()
+        // The baseline of the button text (Y Coordination)
         buttonTextBaseline = calculateBaseline(rectButtonF, textP.fontMetrics)
     }
 
@@ -101,9 +117,13 @@ class LoadingButton @JvmOverloads constructor(
         Log.d(LOG_TAG, "onDraw: run.")
         super.onDraw(canvas)
 
+        // Draw the background rectangle
         canvas?.drawRect(rectButtonF, backgroundP)
+        // Draw the background cover rectangle (Loading Progress Cover)
         canvas?.drawRect(rectButtonCoverF, backgroundCoverP)
+        // Draw the text
         canvas?.drawText(buttonState.name, buttonCenterX, buttonTextBaseline, textP)
+        // Draw the circular progress bar (Arc)
         canvas?.drawArc(rectArcF, 0f, sweepDegree, true, arcP)
     }
 
