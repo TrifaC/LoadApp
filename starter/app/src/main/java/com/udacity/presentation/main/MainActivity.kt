@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainActivityVM
     private lateinit var mainViewModelFactory: MainActivityVMFactory
 
-    private lateinit var downloadTimer: CountDownTimer
-
     private lateinit var downloadManager: DownloadManager
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -47,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBindingAndVM()
-        initTimer()
         initClickListener()
         initManager()
         initVMConnection()
@@ -72,21 +69,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * The timer is used to simulate the period of download.
-     * */
-    private fun initTimer() {
-        downloadTimer = object: CountDownTimer(3000,1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                Log.d(LOG_TAG, "onTick: run().")
-            }
-
-            override fun onFinish() {
-                mainViewModel.finishDownload()
-            }
-        }
-    }
-
-    /**
      * Set onClickListener for clickable item.
      * */
     private fun initClickListener() {
@@ -99,7 +81,6 @@ class MainActivity : AppCompatActivity() {
                     getString(it.nameID),
                     getString(it.descriptionID)
                 ) ?: 0
-                downloadTimer.start()
             }?: Toast.makeText(this, getString(R.string.no_radio_button_selection), Toast.LENGTH_SHORT).show()
         }
 

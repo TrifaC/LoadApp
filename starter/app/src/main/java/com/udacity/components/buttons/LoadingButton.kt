@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.udacity.util.CustomButtonPaint
+import com.udacity.util.calculateArcRectangle
 import com.udacity.util.calculateBaseline
 
 class LoadingButton @JvmOverloads constructor(
@@ -23,10 +24,11 @@ class LoadingButton @JvmOverloads constructor(
     private var rectArcF = RectF()
 
     /** Text Paint, Background Paint, Act Paint. */
-    private var textP = CustomButtonPaint.defaultTextPaint
-    private var backgroundP = CustomButtonPaint.buttonBackgroundPaint
-    private var backgroundCoverP = CustomButtonPaint.buttonBackgroundCoverPaint
-    private var arcP = CustomButtonPaint.defaultArcPaint
+    private val customButtonPaint = CustomButtonPaint(context)
+    private var textP = customButtonPaint.defaultTextPaint
+    private var backgroundP = customButtonPaint.buttonBackgroundPaint
+    private var backgroundCoverP = customButtonPaint.buttonBackgroundCoverPaint
+    private var arcP = customButtonPaint.defaultArcPaint
 
     /** The coordinate of button and text. */
     private var buttonCenterX: Float = 0f
@@ -100,7 +102,8 @@ class LoadingButton @JvmOverloads constructor(
         // The Rectangle area to draw the button. (During the loading progress)
         rectButtonCoverF = RectF(0f, 0f,0f, h.toFloat())
         // The Rectangle area to draw the circular bar arc.
-        rectArcF = RectF((w - h).toFloat(), 0f, w.toFloat(), h.toFloat())
+        rectArcF = calculateArcRectangle(rectButtonF)
+        //rectArcF = RectF((w - h).toFloat(), 0f, w.toFloat(), h.toFloat())
 
         // The center of button (X Coordination)
         buttonCenterX = rectButtonF.centerX()

@@ -16,22 +16,17 @@ fun calculateBaseline(rectF: RectF, fontMetrics: Paint.FontMetrics): Float {
 }
 
 /**
-<<<<<<< HEAD
- * To calculate the radius of the arc.
+ * Function to calculate the Rectangle to draw the arc.(Set the margin according to the button width and height)
  *
- * TODO: Calculate the radius with padding.
-=======
- * Function to calculate the radius of arc.
->>>>>>> 90c1178a6a92fa036d1d1cd6c4a91bb767f64365
+ * @param buttonRectF is the button rectangle
+ * @return the rectangle to draw the arc
  * */
-fun calculateRadius(height: Float): Float {
-    return (height * 0.8f)/2
-}
-
-/**
- * Function to calculate the Rectangle to draw the arc.
- * */
-fun calculateArcRectangle() {
-
+fun calculateArcRectangle(buttonRectF: RectF): RectF {
+    val circleMargin: Float = 0.1f*(buttonRectF.bottom)
+    val leftF: Float = buttonRectF.right - buttonRectF.bottom
+    val rightF: Float = buttonRectF.right - circleMargin
+    val topF: Float = circleMargin
+    val bottomF: Float = buttonRectF.bottom - circleMargin
+    return RectF(leftF,topF,rightF,bottomF)
 }
 
