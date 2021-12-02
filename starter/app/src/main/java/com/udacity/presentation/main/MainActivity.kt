@@ -1,15 +1,16 @@
 package com.udacity.presentation.main
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModelFactory: MainActivityVMFactory
 
     private lateinit var downloadManager: DownloadManager
+    private lateinit var notificationChannel: NotificationChannel
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
@@ -47,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         initBindingAndVM()
         initClickListener()
         initManager()
+        intiNotificationChannel(
+            getString(R.string.loading_app_channel_id),
+            getString(R.string.loading_app_channel_name)
+        )
         initVMConnection()
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
@@ -102,10 +108,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Initialize the notification channel.
+     * TODO: Checking the meaning of setShowBadge
+     * */
+    private fun intiNotificationChannel(channelID: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationChannel =
+                NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH)
+                    .apply {
+                        setShowBadge(false)
+                        enableLights(true)
+                        lightColor = Color.BLUE
+                        enableVibration(true)
+                        description = getString(R.string.notification_description)
+                    }
+            notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+
+    }
+
+    /**
      * Initialization the connection between UI components and view model.
      * */
     private fun initVMConnection() {
-        mainViewModel.loadingBtnState.observe( this, Observer { stateChangeOperation(it) } )
+        mainViewModel.loadingBtnState.observe(this, Observer { stateChangeOperation(it) })
     }
 
 
