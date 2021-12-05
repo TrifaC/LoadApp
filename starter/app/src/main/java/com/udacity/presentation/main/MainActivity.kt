@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var downloadManager: DownloadManager
     private lateinit var notificationChannel: NotificationChannel
     private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
 
     private var downloadID: Long = 0
     private var downloadItem: DownloadItem? = null
@@ -54,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.loading_app_channel_name)
         )
         initVMConnection()
-        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
 
@@ -108,8 +105,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Initialize the notification channel.
-     * TODO: Checking the meaning of setShowBadge
+     * Initialize the notification channel. Use the notificationManager here is for creating the
+     * notification channel.
      * */
     private fun intiNotificationChannel(channelID: String, channelName: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -136,22 +133,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//--------------------------------------------------------------------------------------------------
-
-
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-        }
-    }
-
-
 //------------------------------------- Event Trigger And UI Update --------------------------------
 
     /**
      * The method handle the operation when the state is update.
-     *
-     * TODO: Consider the click action when the state is loading.
      * */
     private fun stateChangeOperation(state: ButtonState) {
         binding.mainActivityContents.loading_btn.changeState(state)

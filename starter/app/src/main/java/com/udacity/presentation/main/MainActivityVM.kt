@@ -1,17 +1,21 @@
 package com.udacity.presentation.main
 
-import android.app.Application
-import android.app.DownloadManager
-import android.app.NotificationManager
+import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
+import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.udacity.R
 import com.udacity.components.buttons.ButtonState
+import com.udacity.receivers.AlarmReceiver
+import com.udacity.util.Constants
 import com.udacity.util.DownloadUtil
+import com.udacity.util.cancelNotification
 import com.udacity.util.sendNotification
 
 class MainActivityVM(application: Application) : AndroidViewModel(application) {
@@ -23,6 +27,9 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     private var mApplication: Application = application
     private lateinit var notificationManager: NotificationManager
     private lateinit var loadingTimer: CountDownTimer
+    private lateinit var notifyPendingIntent: PendingIntent
+    private var alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private var notifyIntent = Intent(application, AlarmReceiver::class.java)
 
     /** The value to store the state of the loading button. */
     private val _loadingBtnState = MutableLiveData<ButtonState>()
@@ -36,6 +43,7 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     init {
         _loadingBtnState.value = ButtonState.TO_CLICK
         initLoadingTimer()
+        initPendingIntent()
         initManager()
     }
 
@@ -54,12 +62,30 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun initPendingIntent() {
+        notifyPendingIntent = PendingIntent.getBroadcast(
+            getApplication(),
+            Constants.REQUEST_CODE,
+            notifyIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
     private fun initManager() {
         notificationManager = ContextCompat.getSystemService(
             mApplication,
             NotificationManager::class.java
         ) as NotificationManager
+        notificationManager.cancelNotification()
+
+        AlarmManagerCompat.setExactAndAllowWhileIdle(
+            alarmManager,
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            Constants.SNOOZE_BREAK,
+            notifyPendingIntent
+        )
     }
+
 
 
 //------------------------------------- Event Trigger Function -------------------------------------
@@ -83,7 +109,6 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         if (_loadingBtnState.value == ButtonState.TO_CLICK) {
             _loadingBtnState.value = ButtonState.LOADING
             loadingTimer.start()
-            notificationManager.sendNotification(mApplication.getString(R.string.loading_app_notification_title), mApplication)
             return DownloadUtil.download(
                 downloadManager,
                 appUrl,
@@ -95,8 +120,12 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * The action will be executed after finishing download.(Change the state and send the notification)
+     * */
     fun finishDownload() {
         _loadingBtnState.value = ButtonState.TO_CLICK
+        notificationManager.sendNotification(mApplication.getString(R.string.loading_app_notification_message), mApplication)
     }
 
 

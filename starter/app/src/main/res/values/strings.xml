@@ -15,9 +15,11 @@
     <string name="title_activity_detail">DetailActivity</string>
 
     <!-- Notification Channel label -->
-    <string name="loading_app_channel_id">Loading App Channel</string>
-    <string name="loading_app_channel_name">Loading Channel</string>
-    <string name="loading_app_notification_title">Finish Download</string>
+    <string name="loading_app_channel_id">The id of channel</string>
+    <string name="loading_app_channel_name">The name of channel</string>
+    <string name="loading_app_notification_title">The title of notification</string>
+    <string name="loading_app_notification_message">The message of notification</string>
+    <string name="notification_snooze_label">Snooze</string>
 
     <!-- Test Label -->
     <string name="radio_button_label_glide">Glide</string>
@@ -32,5 +34,6 @@
 
     <!-- Error -->
     <string name="no_radio_button_selection">No Radio Button Selection</string>
+    <string name="notification_check_status_label">Check Status</string>
 
 </resources>

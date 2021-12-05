@@ -124,7 +124,7 @@ class LoadingButton @JvmOverloads constructor(
         // Draw the background cover rectangle (Loading Progress Cover)
         canvas?.drawRect(rectButtonCoverF, backgroundCoverP)
         // Draw the text
-        canvas?.drawText(buttonState.name, buttonCenterX, buttonTextBaseline, textP)
+        canvas?.drawText(context.getString(buttonState.label), buttonCenterX, buttonTextBaseline, textP)
         // Draw the circular progress bar (Arc)
         canvas?.drawArc(rectArcF, 0f, sweepDegree, true, arcP)
     }
@@ -145,9 +145,11 @@ class LoadingButton @JvmOverloads constructor(
     fun changeState(mButtonState: ButtonState) {
         buttonState = mButtonState
         when (mButtonState) {
+            // The button cover should be reset to 0 after finishing loading.
             ButtonState.TO_CLICK -> {
                 rectButtonCoverF?.right = 0f
             }
+            // Start the loading animation, after changing to loading state.
             ButtonState.LOADING -> {
                 valueAnimator.start()
             }
