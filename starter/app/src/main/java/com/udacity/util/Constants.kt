@@ -10,6 +10,7 @@ object Constants {
     const val TRIGGER_TIME: String = "Trigger at"
     const val NOTIFICATION_ID: Int = 7
     const val REQUEST_CODE: Int = 8
+    const val NO_ICON: Int = 0
     const val FLAGS: Int = 0
 
     const val MINUTE: Long = 60000L

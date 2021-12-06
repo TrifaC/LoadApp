@@ -78,12 +78,13 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         ) as NotificationManager
         notificationManager.cancelNotification()
 
-        AlarmManagerCompat.setExactAndAllowWhileIdle(
-            alarmManager,
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            Constants.SNOOZE_BREAK,
-            notifyPendingIntent
-        )
+        // We can add alarm manager if we want to make alarm when user enter the app.
+        //AlarmManagerCompat.setExactAndAllowWhileIdle(
+        //    alarmManager,
+        //    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+        //    Constants.SNOOZE_BREAK,
+        //    notifyPendingIntent
+        //)
     }
 
 
