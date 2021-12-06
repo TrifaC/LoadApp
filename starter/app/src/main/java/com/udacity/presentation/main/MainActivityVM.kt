@@ -92,7 +92,6 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
 //------------------------------------- Event Trigger Function -------------------------------------
 
     /**
-     * Test Method:
      * The method will be called when download button has been click.
      *
      * @param downloadManager used for download the file.

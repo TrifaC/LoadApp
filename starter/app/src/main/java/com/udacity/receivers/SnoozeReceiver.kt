@@ -15,6 +15,7 @@ class SnoozeReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val triggerTime = SystemClock.elapsedRealtime() + Constants.SNOOZE_BREAK
 
+        // The intent to send the notification.
         val notifyIntent = Intent(context, AlarmReceiver::class.java)
         val notifyPendingIntent = PendingIntent.getBroadcast(
             context,
@@ -23,6 +24,7 @@ class SnoozeReceiver: BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        // The intent to trigger the notification sending.
         val alarmManager = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         AlarmManagerCompat.setExactAndAllowWhileIdle(
             alarmManager,

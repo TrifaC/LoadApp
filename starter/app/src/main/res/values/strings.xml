@@ -21,6 +21,11 @@
     <string name="loading_app_notification_message">The message of notification</string>
     <string name="notification_snooze_label">Snooze</string>
 
+    <!-- Detail Screen -->
+    <string name="detail_screen_floating_btn_des">The floating button of detail page</string>
+    <string name="detail_screen_file_name_label">File Name: </string>
+    <string name="detail_screen_status_label">Status: </string>
+
     <!-- Test Label -->
     <string name="radio_button_label_glide">Glide</string>
     <string name="radio_button_label_retrofit">Retrofit</string>
