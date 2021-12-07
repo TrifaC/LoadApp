@@ -1,11 +1,9 @@
 package com.udacity.presentation.main
 
 import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
-import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,7 +26,7 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     private lateinit var notificationManager: NotificationManager
     private lateinit var loadingTimer: CountDownTimer
     private lateinit var notifyPendingIntent: PendingIntent
-    private var alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    //private var alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private var notifyIntent = Intent(application, AlarmReceiver::class.java)
 
     /** The value to store the state of the loading button. */

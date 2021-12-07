@@ -12,7 +12,7 @@
     <dimen name="default_custom_button_text_size">24sp</dimen>
 
     <!-- Width and Height -->
-    <dimen name="default_action_bar_height">48dp</dimen>
+    <dimen name="default_action_bar_height">56dp</dimen>
     <dimen name="default_custom_button_height">48dp</dimen>
     <dimen name="default_custom_button_circle_diameter">32dp</dimen>
 </resources>
