@@ -28,7 +28,6 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     private lateinit var notificationManager: NotificationManager
     private lateinit var loadingTimer: CountDownTimer
     private lateinit var notifyPendingIntent: PendingIntent
-    private var alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private var notifyIntent = Intent(application, AlarmReceiver::class.java)
 
     /** The value to store the state of the loading button. */
@@ -77,13 +76,6 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
             NotificationManager::class.java
         ) as NotificationManager
         notificationManager.cancelNotification()
-
-        AlarmManagerCompat.setExactAndAllowWhileIdle(
-            alarmManager,
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            Constants.SNOOZE_BREAK,
-            notifyPendingIntent
-        )
     }
 
 
