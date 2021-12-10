@@ -3,17 +3,11 @@ package com.udacity.presentation.main
 import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -69,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this, mainViewModelFactory).get(MainActivityVM::class.java)
         binding.lifecycleOwner = this
 
+        binding.mainActivityContents.radioGroup.glide_download_RB.text = getString(R.string.file_name_glide)
+        binding.mainActivityContents.radioGroup.load_app_download_RB.text = getString(R.string.file_name_loadapp)
+        binding.mainActivityContents.radioGroup.retrofit_download_RB.text = getString(R.string.file_name_retrofit)
     }
 
     /**

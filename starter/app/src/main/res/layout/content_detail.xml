@@ -8,4 +8,48 @@
     tools:context=".presentation.detail.DetailActivity"
     tools:showIn="@layout/activity_detail">
 
+    <TextView
+        android:id="@+id/file_name_label_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="48dp"
+        android:text="@string/detail_screen_file_name_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/status_label_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="48dp"
+        android:text="@string/detail_screen_status_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/file_name_label_TV" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="status_label_TV,file_name_label_TV"
+        tools:layout_editor_absoluteX="90dp" />
+
+    <TextView
+        android:id="@+id/file_name_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/barrier_margin"
+        app:layout_constraintStart_toEndOf="@id/barrier3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/file_name_label_TV"
+        tools:layout_editor_absoluteX="240dp" />
+
+    <TextView
+        android:id="@+id/status_TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/barrier_margin"
+        app:layout_constraintStart_toEndOf="@id/barrier3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/status_label_TV"
+        tools:layout_editor_absoluteX="244dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

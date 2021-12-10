@@ -56,12 +56,12 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setLargeIcon(notificationImage)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .addAction(
-            R.drawable.ic_assistant_black_24dp,
+            Constants.NO_ICON,
             applicationContext.getString(R.string.notification_snooze_label),
             snoozePendingIntent
         )
         .addAction(
-            R.drawable.ic_assistant_black_24dp,
+            Constants.NO_ICON,
             applicationContext.getString(R.string.notification_check_status_label),
             contentPendingIntent
         )
