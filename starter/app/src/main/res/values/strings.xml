@@ -40,5 +40,7 @@
     <!-- Error -->
     <string name="no_radio_button_selection">No Radio Button Selection</string>
     <string name="notification_check_status_label">Check Status</string>
+    <string name="toast_finish_download">Finish Download</string>
+    <string name="floating_back_button_des">The floating back button</string>
 
 </resources>

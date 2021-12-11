@@ -4,19 +4,47 @@
 
     <Transition
         app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@id/start"></Transition>
+        app:constraintSetStart="@id/start"
+        app:duration="500">
+        <OnSwipe app:targetId="@+id/floating_menu_btn" />
+    </Transition>
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/detail_ML"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent" />
+        <Constraint
+            android:id="@+id/floating_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <Constraint
+            android:id="@+id/floating_menu_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/detail_ML"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent" />
+        <Constraint
+            android:id="@+id/floating_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/floating_menu_btn"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <Constraint
+            android:id="@+id/floating_menu_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 </MotionScene>

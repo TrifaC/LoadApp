@@ -41,15 +41,19 @@
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/floating_back_button_des"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_menu_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
             android:contentDescription="@string/detail_screen_floating_btn_des"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            app:srcCompat="@android:drawable/ic_menu_more" />
+
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

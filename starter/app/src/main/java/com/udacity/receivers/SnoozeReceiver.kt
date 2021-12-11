@@ -7,12 +7,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import android.util.Log
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.content.ContextCompat
 import com.udacity.util.Constants
 
 class SnoozeReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
+        Log.d("Snooze Receiver", "onReceive, run.")
+
         val triggerTime = SystemClock.elapsedRealtime() + Constants.SNOOZE_BREAK
 
         // The intent to send the notification.

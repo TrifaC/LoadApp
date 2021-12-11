@@ -54,6 +54,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setAutoCancel(true)
         .setStyle(notificationBigPictureStyle)
         .setLargeIcon(notificationImage)
+        .setContentIntent(contentPendingIntent)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .addAction(
             Constants.NO_ICON,

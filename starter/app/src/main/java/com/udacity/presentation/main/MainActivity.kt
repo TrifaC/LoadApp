@@ -96,9 +96,13 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Initialize the manager item in the activity.
+     *
+     * @see DownloadManager
+     * @see NotificationManager
      * */
     private fun initManager() {
         downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        notificationManager = getSystemService(NotificationManager::class.java)
     }
 
     /**
@@ -116,7 +120,6 @@ class MainActivity : AppCompatActivity() {
                         enableVibration(true)
                         description = getString(R.string.notification_description)
                     }
-            notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
 
@@ -126,7 +129,7 @@ class MainActivity : AppCompatActivity() {
      * Initialization the connection between UI components and view model.
      * */
     private fun initVMConnection() {
-        mainViewModel.loadingBtnState.observe(this, Observer { stateChangeOperation(it) })
+        mainViewModel.loadingBtnState.observe(this, {stateChangeOperation(it)} )
     }
 
 

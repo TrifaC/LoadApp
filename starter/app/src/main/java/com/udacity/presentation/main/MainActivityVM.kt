@@ -4,13 +4,14 @@ import android.app.*
 import android.content.Intent
 import android.os.CountDownTimer
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.udacity.R
 import com.udacity.components.buttons.ButtonState
-import com.udacity.receivers.AlarmReceiver
+import com.udacity.presentation.detail.DetailActivity
 import com.udacity.util.Constants
 import com.udacity.util.DownloadUtil
 import com.udacity.util.cancelNotification
@@ -22,13 +23,13 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         private const val LOG_TAG: String = "MainActivityVM"
     }
 
-    private var mApplication: Application = application
+    private val mApplication: Application = application
     private lateinit var notificationManager: NotificationManager
     private lateinit var loadingTimer: CountDownTimer
     private lateinit var notifyPendingIntent: PendingIntent
 
     //private var alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private var notifyIntent = Intent(application, AlarmReceiver::class.java)
+    private var notifyIntent = Intent(application, DetailActivity::class.java)
 
     /** The value to store the state of the loading button. */
     private val _loadingBtnState = MutableLiveData<ButtonState>()
@@ -86,8 +87,8 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     }
 
 
-
 //------------------------------------- Event Trigger Function -------------------------------------
+
 
     /**
      * The method will be called when download button has been click.
@@ -124,6 +125,7 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     fun finishDownload() {
         _loadingBtnState.value = ButtonState.TO_CLICK
         notificationManager.sendNotification(mApplication.getString(R.string.loading_app_notification_message), mApplication)
+        Toast.makeText(mApplication, mApplication.getString(R.string.toast_finish_download), Toast.LENGTH_SHORT).show()
     }
 
 
