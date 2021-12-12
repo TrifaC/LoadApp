@@ -11,12 +11,15 @@ import com.udacity.presentation.detail.DetailActivity
 import com.udacity.receivers.SnoozeReceiver
 
 // Create and send the notification.
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+fun NotificationManager.sendNotification(messageTitle: String, messageBody: String, applicationContext: Context) {
 
     /********************************** Build Intent **********************************************/
 
     // The intent to open detail page.
-    val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+    val contentIntent = Intent(applicationContext, DetailActivity::class.java).apply {
+        putExtra(Constants.EXTRA_MESSAGE_TITLE, messageTitle)
+        putExtra(Constants.EXTRA_MESSAGE_BODY, messageBody)
+    }
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
         Constants.NOTIFICATION_ID,
@@ -25,7 +28,10 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     )
 
     // The intent to take a snooze action.
-    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
+    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java).apply {
+        putExtra(Constants.EXTRA_MESSAGE_TITLE, messageTitle)
+        putExtra(Constants.EXTRA_MESSAGE_BODY, messageBody)
+    }
     val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
         applicationContext,
         Constants.REQUEST_CODE,

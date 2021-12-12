@@ -13,6 +13,8 @@
     <string name="custom_button_label_loading">Loading</string>
     <string name="custom_button_label_complete">Complete</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="floating_back_button_des">The floating back button</string>
+    <string name="toast_finish_download">Finish Download</string>
 
     <!-- Notification Channel label -->
     <string name="loading_app_channel_id">The id of channel</string>
@@ -20,6 +22,7 @@
     <string name="loading_app_notification_title">The title of notification</string>
     <string name="loading_app_notification_message">The message of notification</string>
     <string name="notification_snooze_label">Snooze</string>
+    <string name="notification_check_status_label">Check Status</string>
 
     <!-- Detail Screen -->
     <string name="detail_screen_floating_btn_des">The floating button of detail page</string>
@@ -27,20 +30,20 @@
     <string name="detail_screen_status_label">Status: </string>
 
     <!-- Test Label -->
-    <string name="radio_button_label_glide">Glide</string>
-    <string name="radio_button_label_retrofit">Retrofit</string>
-    <string name="radio_button_label_loadapp">Load App</string>
     <string name="file_name_glide">Glide</string>
     <string name="file_name_retrofit">Retrofit</string>
     <string name="file_name_loadapp">Load App</string>
     <string name="file_description_glide">Image Loading Library by BumpTech</string>
     <string name="file_description_retrofit">Type-safe HTTP client for Android and Java by Square.Inc</string>
     <string name="file_description_loadapp">Current repository by Udacity</string>
+    <string name="radio_button_label_glide">Glide - Image Loading Library by BumpTech</string>
+    <string name="radio_button_label_retrofit">Retrofit - Type-safe HTTP client for Android and Java by Square.Inc</string>
+    <string name="radio_button_label_loadapp">Load App - Current repository by Udacity</string>
 
     <!-- Error -->
     <string name="no_radio_button_selection">No Radio Button Selection</string>
-    <string name="notification_check_status_label">Check Status</string>
-    <string name="toast_finish_download">Finish Download</string>
-    <string name="floating_back_button_des">The floating back button</string>
+    <string name="detail_screen_description_title">Description:</string>
+    <string name="detail_screen_success_label">success</string>
+    <string name="detail_screen_fail_label">Fail</string>
 
 </resources>

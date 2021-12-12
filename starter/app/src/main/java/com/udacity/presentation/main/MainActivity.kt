@@ -63,9 +63,9 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this, mainViewModelFactory).get(MainActivityVM::class.java)
         binding.lifecycleOwner = this
 
-        binding.mainActivityContents.radioGroup.glide_download_RB.text = getString(R.string.file_name_glide)
-        binding.mainActivityContents.radioGroup.load_app_download_RB.text = getString(R.string.file_name_loadapp)
-        binding.mainActivityContents.radioGroup.retrofit_download_RB.text = getString(R.string.file_name_retrofit)
+        binding.mainActivityContents.radioGroup.glide_download_RB.text = getString(R.string.radio_button_label_glide)
+        binding.mainActivityContents.radioGroup.load_app_download_RB.text = getString(R.string.radio_button_label_loadapp)
+        binding.mainActivityContents.radioGroup.retrofit_download_RB.text = getString(R.string.radio_button_label_retrofit)
     }
 
     /**

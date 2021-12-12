@@ -17,4 +17,7 @@ object Constants {
     const val SNOOZE_BREAK: Long = 7000L
     const val SECOND: Long = 1000L
 
+    const val EXTRA_MESSAGE_TITLE = "message title"
+    const val EXTRA_MESSAGE_BODY = "message body"
+
 }

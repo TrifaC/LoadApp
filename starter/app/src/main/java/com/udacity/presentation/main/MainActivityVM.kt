@@ -28,7 +28,9 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
     private lateinit var loadingTimer: CountDownTimer
     private lateinit var notifyPendingIntent: PendingIntent
 
-    //private var alarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private var downloadAppName: String = ""
+    private var downloadAppDescription: String = ""
+
     private var notifyIntent = Intent(application, DetailActivity::class.java)
 
     /** The value to store the state of the loading button. */
@@ -62,6 +64,9 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * Initialize the pending intent to be used in notification.
+     * */
     private fun initPendingIntent() {
         notifyPendingIntent = PendingIntent.getBroadcast(
             getApplication(),
@@ -71,19 +76,15 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         )
     }
 
+    /**
+     * Initialize the manager to control the notification.
+     * */
     private fun initManager() {
         notificationManager = ContextCompat.getSystemService(
             mApplication,
             NotificationManager::class.java
         ) as NotificationManager
         notificationManager.cancelNotification()
-        // We can add alarm manager if we want to make alarm when user enter the app.
-        //AlarmManagerCompat.setExactAndAllowWhileIdle(
-        //    alarmManager,
-        //    AlarmManager.ELAPSED_REALTIME_WAKEUP,
-        //    Constants.SNOOZE_BREAK,
-        //    notifyPendingIntent
-        //)
     }
 
 
@@ -108,6 +109,8 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
         if (_loadingBtnState.value == ButtonState.TO_CLICK) {
             _loadingBtnState.value = ButtonState.LOADING
             loadingTimer.start()
+            downloadAppName = appName
+            downloadAppDescription = appDescription
             return DownloadUtil.download(
                 downloadManager,
                 appUrl,
@@ -124,7 +127,7 @@ class MainActivityVM(application: Application) : AndroidViewModel(application) {
      * */
     fun finishDownload() {
         _loadingBtnState.value = ButtonState.TO_CLICK
-        notificationManager.sendNotification(mApplication.getString(R.string.loading_app_notification_message), mApplication)
+        notificationManager.sendNotification(downloadAppName, downloadAppDescription , mApplication)
         Toast.makeText(mApplication, mApplication.getString(R.string.toast_finish_download), Toast.LENGTH_SHORT).show()
     }
 

@@ -16,10 +16,16 @@ class SnoozeReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d("Snooze Receiver", "onReceive, run.")
 
+        val messageTitle: String? = intent?.getStringExtra(Constants.EXTRA_MESSAGE_TITLE)
+        val messageBody: String? = intent?.getStringExtra(Constants.EXTRA_MESSAGE_BODY)
+
         val triggerTime = SystemClock.elapsedRealtime() + Constants.SNOOZE_BREAK
 
         // The intent to send the notification.
-        val notifyIntent = Intent(context, AlarmReceiver::class.java)
+        val notifyIntent = Intent(context, AlarmReceiver::class.java).apply {
+            this.putExtra(Constants.EXTRA_MESSAGE_TITLE, messageTitle)
+            this.putExtra(Constants.EXTRA_MESSAGE_BODY, messageBody)
+        }
         val notifyPendingIntent = PendingIntent.getBroadcast(
             context,
             Constants.REQUEST_CODE,
